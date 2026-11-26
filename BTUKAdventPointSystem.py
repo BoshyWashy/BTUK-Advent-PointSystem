@@ -1,17 +1,52 @@
 import os
+import math
 
 BASE_POINTS = 10
 
 def calculatePoints(evaluationQuery):
-    
+
     # size
-    base_score_size = 0
-    size = input("enter size: s/m/l") # 
-    if size == "l":
-        base_score_size = 4
-    elif size == "m":
-        base_score_size = 2
+    if evaluationQuery == "building":
+        size_medium_minimum = 175.0
+        size_large_minimum = 350.0
+        floors = int(input("Enter number of floors."))
+        area = int(input("Enter polygon area from google earth pro."))
+        floors = math.sqrt(floors)
+        size = floors * area
+        if size < size_medium_minimum:
+            base_score_size = 0 # small
+        elif size >= size_medium_minimum and size < size_large_minimum:
+            base_score_size = 2 # medium
+        else:
+            base_score_size = 4 # large
+    elif evaluationQuery == "park":
+        size_medium_minimum = 1000
+        size_large_minimum = 2500
+        area = int(input("Enter polygon area from google earth pro."))
+        if area < size_medium_minimum:
+            base_score_size = 0 # small
+        elif area >= size_medium_minimum and area < size_large_minimum:
+            base_score_size = 2 # medium
+        else:
+            base_score_size = 4 # large
+    elif evaluationQuery == "road":
+            size_medium_minimum = 4000
+            size_large_minimum = 8000
+            area = int(input("Enter polygon area from google earth pro."))
+            if area < size_medium_minimum:
+                base_score_size = 0 # small
+            elif area >= size_medium_minimum and area < size_large_minimum:
+                base_score_size = 2 # medium
+            else:
+                base_score_size = 4 # large
     print("size:", base_score_size) 
+    #base_score_size = 0
+    #size = input("enter size: s/m/l") # 
+    #if size == "l":
+    #    base_score_size = 4
+    #elif size == "m":
+    #    base_score_size = 2
+    #print("size:", base_score_size) 
 
     # complexity
     if evaluationQuery == "building":
